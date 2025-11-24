@@ -1,13 +1,13 @@
-package ro.pub.cs.systems.eim.lab07.calculatorwebservice.general;
+package ro.pub.cs.systems.eim.lab08.calculatorwebservice.general;
 
-public interface Constants {
+public class Constants {
 
     final public static boolean DEBUG = true;
 
     final public static String TAG = "[CalculatorWebService]";
 
-    final public static String GET_WEB_SERVICE_ADDRESS = "http://jepi.cs.pub.ro/expr/expr_get.php";
-    final public static String POST_WEB_SERVICE_ADDRESS = "http://jepi.cs.pub.ro/expr/expr_post.php";
+    final public static String GET_WEB_SERVICE_ADDRESS = "https://wi-fi.cs.pub.ro/expr/expr_get.php";
+    final public static String POST_WEB_SERVICE_ADDRESS = "https://wi-fi.cs.pub.ro/expr/expr_post.php";
 
 
     final public static String ERROR_MESSAGE_EMPTY = "Operator fields cannot be empty!";

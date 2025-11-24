@@ -1,6 +1,7 @@
-package ro.pub.cs.systems.eim.lab07.calculatorwebservice.view;
+package ro.pub.cs.systems.eim.lab08.calculatorwebservice.view;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,8 +9,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import ro.pub.cs.systems.eim.lab07.calculatorwebservice.R;
-import ro.pub.cs.systems.eim.lab07.calculatorwebservice.network.CalculatorWebServiceAsyncTask;
+import ro.pub.cs.systems.eim.lab08.calculatorwebservice.R;
+import ro.pub.cs.systems.eim.lab08.calculatorwebservice.network.CalculatorWebServiceAsyncTask;
 
 public class CalculatorWebServiceActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class CalculatorWebServiceActivity extends AppCompatActivity {
             String operator1 = operator1EditText.getText().toString();
             String operator2 = operator2EditText.getText().toString();
             String operation = operationSpinner.getSelectedItem().toString();
+            // The method logic remains the same
             String method = String.valueOf(methodSpinner.getSelectedItemPosition());
 
             CalculatorWebServiceAsyncTask calculatorWebServiceAsyncTask = new CalculatorWebServiceAsyncTask(resultTextView);
