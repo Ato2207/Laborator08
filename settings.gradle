@@ -14,6 +14,10 @@ project(':javaSolutionCalculatorWebService').projectDir = new File(rootDir, 'sol
 include ':javaSolutionXCDCartoonDisplayer'
 project(':javaSolutionXCDCartoonDisplayer').projectDir = new File(rootDir, 'solutions/XKCDCartoonDisplayer/app')
 
+// Kotlin Skeleton modules (labtasks)
+include ':kotlinSkelCalculatorWebService'
+project(':kotlinSkelCalculatorWebService').projectDir = new File(rootDir, 'labtasks-kotlin/CalculatorWebService/app')
+
 // Kotlin Solution modules
 include ':kotlinSolutionCalculatorWebService'
 project(':kotlinSolutionCalculatorWebService').projectDir = new File(rootDir, 'solutions-kotlin/CalculatorWebService/app')
