@@ -5,6 +5,7 @@
     <string name="operation">Operation</string>
     <string name="method">Method</string>
     <string name="display_result">Display Result</string>
+    <string name="display_quote">Display Quote</string>
     <string-array name="operations">
         <item>plus</item>
         <item>minus</item>

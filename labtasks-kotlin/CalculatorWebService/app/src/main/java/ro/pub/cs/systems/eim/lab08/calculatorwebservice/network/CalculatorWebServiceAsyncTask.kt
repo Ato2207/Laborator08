@@ -3,8 +3,16 @@ package ro.pub.cs.systems.eim.lab08.calculatorwebservice.network
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.TextView
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import ro.pub.cs.systems.eim.lab08.calculatorwebservice.general.Constants
+import java.lang.ref.WeakReference
 
 class CalculatorWebServiceAsyncTask(private val resultTextView: TextView) : AsyncTask<String, Void, String>() {
+    private val resultTextViewReference: WeakReference<TextView> = WeakReference(resultTextView)
 
     override fun doInBackground(vararg params: String?): String? {
         val operator1 = params[0]
@@ -14,26 +22,62 @@ class CalculatorWebServiceAsyncTask(private val resultTextView: TextView) : Asyn
 
         // TODO exercise 4
         // signal missing values through error messages
+        if (operator1.isNullOrEmpty() || operator2.isNullOrEmpty()) {
+            return Constants.ERROR_MESSAGE_EMPTY
+        }
 
         // create an instance of a okhttp object
+        val client = OkHttpClient()
+        var request: Request? = null
 
-        // get method used for sending request from methodsSpinner
+        try {
+            when (method) {
+                Constants.GET_OPERATION -> {
+                    val getStr = Constants.GET_WEB_SERVICE_ADDRESS + "?" +
+                            Constants.OPERATION_ATTRIBUTE + "=" + operation + "&" +
+                            Constants.OPERATOR1_ATTRIBUTE + "=" + operator1 + "&" +
+                            Constants.OPERATOR2_ATTRIBUTE + "=" + operator2
 
-        // 1. GET
-        // a) build the URL into a Get object (append the operators / operations to the Internet address)
-        // b) create an instance of a HttpUrl.Builder object
-        // c) execute the request, thus generating the result
+                    request = Request.Builder()
+                        .url(getStr)
+                        .build()
+                }
 
-        // 2. POST
-        // a) build the URL into a PostBody object
-        // b) create an instance of a RequestBuilder object
-        // c) execute the request, thus generating the result
+                Constants.POST_OPERATION -> {
+                    val postBody: RequestBody = FormBody.Builder()
+                        .add(Constants.OPERATION_ATTRIBUTE, operation.orEmpty())
+                        .add(Constants.OPERATOR1_ATTRIBUTE, operator1.orEmpty())
+                        .add(Constants.OPERATOR2_ATTRIBUTE, operator2.orEmpty())
+                        .build()
 
-        return null
+                    request = Request.Builder()
+                        .url(Constants.POST_WEB_SERVICE_ADDRESS)
+                        .post(postBody)
+                        .build()
+                }
+            }
+
+            if (request == null) {
+                return "Error: Invalid method selected."
+            }
+
+            // Execute the request and get the response
+            val response: Response = client.newCall(request).execute()
+            return if (response.isSuccessful && response.body != null) {
+                response.body!!.string()
+            } else {
+                "Error: ${response.code} ${response.message}"
+            }
+        } catch (e: Exception) {
+            Log.e(Constants.TAG, "OkHttp request failed: ${e.message}")
+            return "Error: ${e.message}"
+        }
     }
 
     override fun onPostExecute(result: String?) {
         // display the result in resultTextView
+        val resultTextView = resultTextViewReference.get()
+        resultTextView?.text = result
     }
 }
 

@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import ro.pub.cs.systems.eim.lab08.calculatorwebservice.R
 import ro.pub.cs.systems.eim.lab08.calculatorwebservice.network.CalculatorWebServiceAsyncTask
+import ro.pub.cs.systems.eim.lab08.calculatorwebservice.network.QuoteWebServiceAsyncTask
 
 class CalculatorWebServiceActivity : AppCompatActivity() {
 
@@ -20,6 +21,8 @@ class CalculatorWebServiceActivity : AppCompatActivity() {
     private lateinit var resultTextView: TextView
     private lateinit var operationSpinner: Spinner
     private lateinit var methodSpinner: Spinner
+
+    private lateinit var quoteTextView: TextView
 
     private val displayResultButtonClickListener = object : View.OnClickListener {
         override fun onClick(view: View) {
@@ -30,6 +33,13 @@ class CalculatorWebServiceActivity : AppCompatActivity() {
 
             val calculatorWebServiceAsyncTask = CalculatorWebServiceAsyncTask(resultTextView)
             calculatorWebServiceAsyncTask.execute(operator1, operator2, operation, method)
+        }
+    }
+
+    private val displayQuoteButtonClickListener = object : View.OnClickListener {
+        override fun onClick(view: View) {
+            val quoteWebServiceAsyncTask = QuoteWebServiceAsyncTask(quoteTextView)
+            quoteWebServiceAsyncTask.execute()
         }
     }
 
@@ -53,10 +63,13 @@ class CalculatorWebServiceActivity : AppCompatActivity() {
         operator1EditText = findViewById(R.id.operator1_edit_text)
         operator2EditText = findViewById(R.id.operator2_edit_text)
         resultTextView = findViewById(R.id.result_text_view)
+        quoteTextView = findViewById(R.id.quote_text_view)
         operationSpinner = findViewById(R.id.operation_spinner)
         methodSpinner = findViewById(R.id.method_spinner)
         val displayResultButton: Button = findViewById(R.id.display_result_button)
         displayResultButton.setOnClickListener(displayResultButtonClickListener)
+        val displayQuoteButton: Button = findViewById(R.id.display_quote_button)
+        displayQuoteButton.setOnClickListener(displayQuoteButtonClickListener)
     }
 }
 
